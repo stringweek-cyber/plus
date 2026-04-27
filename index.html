@@ -8,23 +8,23 @@
     <style>
         body {
             touch-action: manipulation;
-            background-color: #f3f4f6;
+            background-color: #e5e7eb; /* 배경을 조금 더 진한 회색으로 변경하여 계산기 본체와 대비 */
         }
         .btn-active:active {
             transform: scale(0.95);
-            background-color: #e5e7eb;
+            background-color: #d1d5db;
         }
         .equal-btn-active:active {
             transform: scale(0.95);
-            background-color: #2563eb;
+            background-color: #1d4ed8;
         }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
-    <div class="w-full max-w-sm bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+    <div class="w-full max-w-sm bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200">
         <!-- Header -->
-        <header class="bg-gray-50 p-6 border-b border-gray-100">
+        <header class="bg-white p-6 border-b border-gray-100">
             <h1 class="text-xl font-bold text-center text-gray-700">더하기만 하는 계산기</h1>
         </header>
 
@@ -38,27 +38,27 @@
             </div>
         </div>
 
-        <!-- Keypad Area -->
-        <div class="p-6 bg-gray-50 grid grid-cols-3 gap-4">
+        <!-- Keypad Area (배경색을 조정하여 버튼과 대비를 높임) -->
+        <div class="p-6 bg-gray-100 grid grid-cols-3 gap-4 border-t border-gray-200">
             <!-- 1 2 3 -->
-            <button onclick="addNumber(1)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-semibold text-gray-700 shadow-sm transition-all">1</button>
-            <button onclick="addNumber(2)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-semibold text-gray-700 shadow-sm transition-all">2</button>
-            <button onclick="addNumber(3)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-semibold text-gray-700 shadow-sm transition-all">3</button>
+            <button onclick="addNumber(1)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">1</button>
+            <button onclick="addNumber(2)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">2</button>
+            <button onclick="addNumber(3)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">3</button>
             
             <!-- 4 5 6 -->
-            <button onclick="addNumber(4)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-semibold text-gray-700 shadow-sm transition-all">4</button>
-            <button onclick="addNumber(5)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-semibold text-gray-700 shadow-sm transition-all">5</button>
-            <button onclick="addNumber(6)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-semibold text-gray-700 shadow-sm transition-all">6</button>
+            <button onclick="addNumber(4)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">4</button>
+            <button onclick="addNumber(5)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">5</button>
+            <button onclick="addNumber(6)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">6</button>
             
             <!-- 7 8 9 -->
-            <button onclick="addNumber(7)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-semibold text-gray-700 shadow-sm transition-all">7</button>
-            <button onclick="addNumber(8)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-semibold text-gray-700 shadow-sm transition-all">8</button>
-            <button onclick="addNumber(9)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-semibold text-gray-700 shadow-sm transition-all">9</button>
+            <button onclick="addNumber(7)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">7</button>
+            <button onclick="addNumber(8)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">8</button>
+            <button onclick="addNumber(9)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">9</button>
             
             <!-- Clear & Equal -->
-            <button onclick="resetCalculator()" class="btn-active bg-red-50 py-6 rounded-2xl text-xl font-bold text-red-500 shadow-sm transition-all">C</button>
-            <button onclick="addNumber(0)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-semibold text-gray-700 shadow-sm transition-all">0</button>
-            <button onclick="calculate()" class="equal-btn-active bg-blue-500 py-6 rounded-2xl text-2xl font-bold text-white shadow-md transition-all col-span-1">=</button>
+            <button onclick="resetCalculator()" class="btn-active bg-red-100 py-6 rounded-2xl text-xl font-bold text-red-600 shadow-md transition-all">C</button>
+            <button onclick="addNumber(0)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">0</button>
+            <button onclick="calculate()" class="equal-btn-active bg-blue-600 py-6 rounded-2xl text-2xl font-bold text-white shadow-lg transition-all col-span-1">=</button>
         </div>
     </div>
 
@@ -76,7 +76,6 @@
                 resultDisplay.innerText = "0";
             } else {
                 formulaDisplay.innerText = currentFormula.join(' + ');
-                // 합산 로직
                 totalSum = currentFormula.reduce((acc, curr) => acc + curr, 0);
                 if (!isEvaluated) {
                     resultDisplay.innerText = totalSum;
