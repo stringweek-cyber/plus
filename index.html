@@ -8,7 +8,7 @@
     <style>
         body {
             touch-action: manipulation;
-            background-color: #e5e7eb; /* 배경을 조금 더 진한 회색으로 변경하여 계산기 본체와 대비 */
+            background-color: #e5e7eb;
         }
         .btn-active:active {
             transform: scale(0.95);
@@ -18,14 +18,27 @@
             transform: scale(0.95);
             background-color: #1d4ed8;
         }
+        /* 헤더 아이콘 애니메이션 */
+        .header-icon {
+            filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));
+        }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
     <div class="w-full max-w-sm bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200">
-        <!-- Header -->
-        <header class="bg-white p-6 border-b border-gray-100">
-            <h1 class="text-xl font-bold text-center text-gray-700">더하기만 하는 계산기</h1>
+        <!-- 디자인이 개선된 Header -->
+        <header class="bg-gradient-to-r from-gray-50 to-white p-6 border-b border-gray-100 flex items-center justify-center gap-3">
+            <!-- 아이콘 크기 및 패딩 수정 -->
+            <div class="bg-blue-500 p-1.5 rounded-lg header-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </div>
+            <h1 class="text-lg font-extrabold tracking-tight text-gray-800">
+                더하기 <span class="text-blue-600">계산기</span>
+            </h1>
         </header>
 
         <!-- Display Area -->
@@ -38,7 +51,7 @@
             </div>
         </div>
 
-        <!-- Keypad Area (배경색을 조정하여 버튼과 대비를 높임) -->
+        <!-- Keypad Area -->
         <div class="p-6 bg-gray-100 grid grid-cols-3 gap-4 border-t border-gray-200">
             <!-- 1 2 3 -->
             <button onclick="addNumber(1)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">1</button>
