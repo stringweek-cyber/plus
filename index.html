@@ -28,17 +28,22 @@
 
     <div class="w-full max-w-sm bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200">
         <!-- 디자인이 개선된 Header -->
-        <header class="bg-gradient-to-r from-gray-50 to-white p-6 border-b border-gray-100 flex items-center justify-center gap-3">
-            <!-- 아이콘 크기 및 패딩 수정 -->
-            <div class="bg-blue-500 p-1.5 rounded-lg header-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
+        <header class="bg-gradient-to-r from-gray-50 to-white p-6 border-b border-gray-100 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-blue-500 p-1.5 rounded-lg header-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </div>
+                <h1 class="text-lg font-extrabold tracking-tight text-gray-800">
+                    더하기 <span class="text-blue-600">계산기</span>
+                </h1>
             </div>
-            <h1 class="text-lg font-extrabold tracking-tight text-gray-800">
-                더하기 <span class="text-blue-600">계산기</span>
-            </h1>
+            <!-- 버튼 텍스트 수정: 배치 변경 -> 숫자배열변경 -->
+            <button onclick="toggleLayout()" class="text-xs font-bold bg-gray-200 text-gray-600 px-3 py-1.5 rounded-full hover:bg-gray-300 transition-colors">
+                숫자배열변경
+            </button>
         </header>
 
         <!-- Display Area -->
@@ -52,26 +57,8 @@
         </div>
 
         <!-- Keypad Area -->
-        <div class="p-6 bg-gray-100 grid grid-cols-3 gap-4 border-t border-gray-200">
-            <!-- 1 2 3 -->
-            <button onclick="addNumber(1)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">1</button>
-            <button onclick="addNumber(2)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">2</button>
-            <button onclick="addNumber(3)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">3</button>
-            
-            <!-- 4 5 6 -->
-            <button onclick="addNumber(4)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">4</button>
-            <button onclick="addNumber(5)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">5</button>
-            <button onclick="addNumber(6)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">6</button>
-            
-            <!-- 7 8 9 -->
-            <button onclick="addNumber(7)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">7</button>
-            <button onclick="addNumber(8)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">8</button>
-            <button onclick="addNumber(9)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">9</button>
-            
-            <!-- Clear & Equal -->
-            <button onclick="resetCalculator()" class="btn-active bg-red-100 py-6 rounded-2xl text-xl font-bold text-red-600 shadow-md transition-all">C</button>
-            <button onclick="addNumber(0)" class="btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all">0</button>
-            <button onclick="calculate()" class="equal-btn-active bg-blue-600 py-6 rounded-2xl text-2xl font-bold text-white shadow-lg transition-all col-span-1">=</button>
+        <div id="keypad-grid" class="p-6 bg-gray-100 grid grid-cols-3 gap-4 border-t border-gray-200">
+            <!-- JavaScript에서 동적으로 생성됩니다 -->
         </div>
     </div>
 
@@ -79,9 +66,49 @@
         let currentFormula = [];
         let totalSum = 0;
         let isEvaluated = false;
+        // 기본 레이아웃을 'numpad'(789 시작)로 변경
+        let currentLayout = 'numpad'; 
 
         const formulaDisplay = document.getElementById('formula-display');
         const resultDisplay = document.getElementById('result-display');
+        const keypadGrid = document.getElementById('keypad-grid');
+
+        function renderKeypad() {
+            keypadGrid.innerHTML = '';
+            let buttons = [];
+
+            if (currentLayout === 'standard') {
+                // 123 순서 (0 제외)
+                buttons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'C', '='];
+            } else {
+                // 789 순서 (0 제외)
+                buttons = [7, 8, 9, 4, 5, 6, 1, 2, 3, 'C', '='];
+            }
+
+            buttons.forEach((val) => {
+                const btn = document.createElement('button');
+                btn.innerText = val;
+                
+                if (val === 'C') {
+                    // 가로로 크게 (2칸 차지)
+                    btn.className = "btn-active bg-red-100 py-6 rounded-2xl text-xl font-bold text-red-600 shadow-md transition-all col-span-2";
+                    btn.onclick = resetCalculator;
+                } else if (val === '=') {
+                    btn.className = "equal-btn-active bg-blue-600 py-6 rounded-2xl text-2xl font-bold text-white shadow-lg transition-all";
+                    btn.onclick = calculate;
+                } else {
+                    btn.className = "btn-active bg-white py-6 rounded-2xl text-2xl font-bold text-gray-800 shadow-md transition-all";
+                    btn.onclick = () => addNumber(val);
+                }
+                
+                keypadGrid.appendChild(btn);
+            });
+        }
+
+        function toggleLayout() {
+            currentLayout = (currentLayout === 'standard') ? 'numpad' : 'standard';
+            renderKeypad();
+        }
 
         function updateDisplay() {
             if (currentFormula.length === 0) {
@@ -120,6 +147,9 @@
             isEvaluated = false;
             updateDisplay();
         }
+
+        // 초기 실행
+        renderKeypad();
     </script>
 </body>
 </html>
